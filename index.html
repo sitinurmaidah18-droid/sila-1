@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Garuda Cilik: Mengenal Simbol Pancasila</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles for Kids UI */
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 100%);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .font-nunito {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-bounce {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-bounce:hover {
+            transform: scale(1.05);
+        }
+        .btn-bounce:active {
+            transform: scale(0.95);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 10px;
+        }
+
+        .symbol-card {
+            transition: all 0.3s ease;
+        }
+        .symbol-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Top Bar -->
+    <header class="bg-white/80 backdrop-blur-md border-b-4 border-yellow-400 p-3 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Mascot & Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showScreen('screen-main-menu')">
+                <div class="w-12 h-12 bg-amber-100 border-2 border-amber-400 rounded-full flex items-center justify-center text-3xl float-anim">
+                    🦅
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-amber-600 leading-none">Garuda Cilik</h1>
+                    <p class="text-xs text-slate-500 font-nunito">Pendidikan Pancasila Kelas 1 SD</p>
+                </div>
+            </div>
+
+            <!-- Score & Sound Controls -->
+            <div class="flex items-center gap-4">
+                <div class="bg-amber-100 border-2 border-amber-400 px-4 py-1.5 rounded-full flex items-center gap-2">
+                    <i class="fa-solid font-bold fa-star text-yellow-500 text-lg"></i>
+                    <span id="global-score" class="font-bold text-amber-700 text-lg">0</span>
+                    <span class="text-xs text-amber-600 font-bold">Poin</span>
+                </div>
+                <button id="btn-sound" onclick="toggleAudio()" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full flex items-center justify-center transition">
+                    <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto w-full p-4 flex-grow flex flex-col justify-center my-4">
+
+        <!-- ================= MAIN MENU SCREEN ================= -->
+        <section id="screen-main-menu" class="screen flex flex-col items-center text-center space-y-6">
+            <div class="bg-white/90 rounded-3xl p-6 md:p-10 card-shadow border-4 border-amber-300 max-w-2xl w-full relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-200 rounded-full opacity-50"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-sky-200 rounded-full opacity-50"></div>
+
+                <div class="relative z-10">
+                    <div class="w-28 h-28 mx-auto mb-4 bg-gradient-to-tr from-yellow-400 to-amber-200 rounded-full p-2 border-4 border-amber-500 float-anim flex items-center justify-center text-6xl shadow-lg">
+                        🦅
+                    </div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-amber-700 mb-2">Petualangan Garuda Cilik</h2>
+                    <p class="text-lg text-slate-600 font-semibold mb-6">Mengenal Simbol-Simbol Pancasila</p>
+
+                    <p class="text-sm md:text-base text-slate-600 mb-8 bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                        "Halo Teman! Aku Garuda Cilik. Mari bertualang bersama mengenal 5 simbol Pancasila dan kumpulkan bintangnya!"
+                    </p>
+
+                    <button onclick="startJourney()" class="btn-bounce w-full md:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold text-xl rounded-2xl shadow-lg border-b-4 border-green-800 flex items-center justify-center gap-3 mx-auto">
+                        <i class="fa-solid fa-play text-2xl"></i>
+                        Mulai Petualangan!
+                    </button>
+                </div>
+            </div>
+
+            <!-- Series Selection Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 w-full max-w-4xl mt-6">
+                <button onclick="goToSeries(1)" class="btn-bounce bg-white p-4 rounded-2xl border-2 border-sky-300 shadow flex flex-col items-center hover:bg-sky-50">
+                    <span class="text-2xl mb-1">🌟</span>
+                    <span class="text-xs font-bold text-sky-600">Seri 1</span>
+                    <span class="text-sm font-bold text-slate-700">Kenalan Simbol</span>
+                </button>
+                <button onclick="goToSeries(2)" class="btn-bounce bg-white p-4 rounded-2xl border-2 border-amber-300 shadow flex flex-col items-center hover:bg-amber-50">
+                    <span class="text-2xl mb-1">🔍</span>
+                    <span class="text-xs font-bold text-amber-600">Seri 2</span>
+                    <span class="text-sm font-bold text-slate-700">Tebak Simbol</span>
+                </button>
+                <button onclick="goToSeries(3)" class="btn-bounce bg-white p-4 rounded-2xl border-2 border-purple-300 shadow flex flex-col items-center hover:bg-purple-50">
+                    <span class="text-2xl mb-1">🧩</span>
+                    <span class="text-xs font-bold text-purple-600">Seri 3</span>
+                    <span class="text-sm font-bold text-slate-700">Pasangkan</span>
+                </button>
+                <button onclick="goToSeries(4)" class="btn-bounce bg-white p-4 rounded-2xl border-2 border-rose-300 shadow flex flex-col items-center hover:bg-rose-50">
+                    <span class="text-2xl mb-1">🕵️</span>
+                    <span class="text-xs font-bold text-rose-600">Seri 4</span>
+                    <span class="text-sm font-bold text-slate-700">Detektif</span>
+                </button>
+                <button onclick="goToSeries(5)" class="btn-bounce bg-white p-4 rounded-2xl border-2 border-emerald-300 shadow flex flex-col items-center hover:bg-emerald-50">
+                    <span class="text-2xl mb-1">🏆</span>
+                    <span class="text-xs font-bold text-emerald-600">Seri 5</span>
+                    <span class="text-sm font-bold text-slate-700">Tantangan</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= SERI 1: KENALAN DENGAN SIMBOL ================= -->
+        <section id="screen-seri-1" class="screen hidden">
+            <div class="bg-white/90 rounded-3xl p-6 card-shadow border-4 border-sky-300">
+                <!-- Header Seri -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="bg-sky-100 text-sky-700 font-bold px-4 py-1 rounded-full text-sm">Seri 1: Kenalan Simbol</span>
+                    <div class="flex gap-2">
+                        <button onclick="showScreen('screen-main-menu')" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-bold px-3 py-1.5 rounded-xl transition">
+                            <i class="fa-solid fa-house"></i> Menu
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center mb-6">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800">Klik Simbol pada Perisai Garuda!</h3>
+                    <p class="text-sm text-slate-600">Pelajari nama simbol dan bunyi silanya.</p>
+                </div>
+
+                <!-- Main Grid: Shield and Info Box -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Garuda Shield Interactive Grid -->
+                    <div class="bg-amber-100 border-4 border-amber-400 p-4 rounded-3xl relative aspect-square max-w-sm mx-auto w-full grid grid-cols-2 gap-3 shadow-inner">
+                        <!-- Center Shield Emblem (Background accent) -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+                            <i class="fa-solid fa-shield-halved text-9xl text-amber-800"></i>
+                        </div>
+
+                        <!-- Sila 1: Bintang (Center Top Span 2) -->
+                        <button onclick="selectShieldSymbol(1)" class="symbol-card col-span-2 bg-gradient-to-b from-slate-900 to-slate-800 border-4 border-yellow-400 rounded-2xl p-3 flex flex-col items-center justify-center shadow-md hover:ring-4 ring-yellow-300">
+                            <svg class="w-16 h-16" viewBox="0 0 100 100">
+                                <polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#FBBF24" stroke="#D97706" stroke-width="3"/>
+                            </svg>
+                            <span class="text-xs font-bold text-yellow-300 mt-1">Sila 1</span>
+                        </button>
+
+                        <!-- Sila 2: Rantai -->
+                        <button onclick="selectShieldSymbol(2)" class="symbol-card bg-red-50 border-4 border-red-300 rounded-2xl p-3 flex flex-col items-center justify-center shadow-md hover:ring-4 ring-red-300">
+                            <div class="w-14 h-14 flex items-center justify-center text-3xl">⛓️</div>
+                            <span class="text-xs font-bold text-red-600">Sila 2</span>
+                        </button>
+
+                        <!-- Sila 3: Pohon Beringin -->
+                        <button onclick="selectShieldSymbol(3)" class="symbol-card bg-emerald-50 border-4 border-emerald-300 rounded-2xl p-3 flex flex-col items-center justify-center shadow-md hover:ring-4 ring-emerald-300">
+                            <div class="w-14 h-14 flex items-center justify-center text-3xl">🌳</div>
+                            <span class="text-xs font-bold text-emerald-600">Sila 3</span>
+                        </button>
+
+                        <!-- Sila 4: Kepala Banteng -->
+                        <button onclick="selectShieldSymbol(4)" class="symbol-card bg-rose-50 border-4 border-rose-300 rounded-2xl p-3 flex flex-col items-center justify-center shadow-md hover:ring-4 ring-rose-300">
+                            <div class="w-14 h-14 flex items-center justify-center text-3xl">🐂</div>
+                            <span class="text-xs font-bold text-rose-600">Sila 4</span>
+                        </button>
+
+                        <!-- Sila 5: Padi dan Kapas -->
+                        <button onclick="selectShieldSymbol(5)" class="symbol-card bg-amber-50 border-4 border-amber-300 rounded-2xl p-3 flex flex-col items-center justify-center shadow-md hover:ring-4 ring-amber-300">
+                            <div class="w-14 h-14 flex items-center justify-center text-3xl">🌾</div>
+                            <span class="text-xs font-bold text-amber-600">Sila 5</span>
+                        </button>
+                    </div>
+
+                    <!-- Info Box Display -->
+                    <div id="seri1-info" class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-5 flex flex-col justify-between h-full min-h-[300px]">
+                        <div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div id="seri1-icon" class="w-12 h-12 bg-white rounded-xl border border-sky-300 flex items-center justify-center text-2xl shadow-sm">
+                                    👇
+                                </div>
+                                <div>
+                                    <h4 id="seri1-title" class="text-lg font-bold text-sky-800">Pilih Salah Satu Simbol</h4>
+                                    <p id="seri1-subtitle" class="text-xs text-sky-600">Klik pada perisai di samping kiri</p>
+                                </div>
+                            </div>
+
+                            <hr class="border-sky-200 my-3">
+
+                            <div id="seri1-desc" class="space-y-3 text-slate-700">
+                                <p class="text-sm italic text-slate-500">Petunjuk: Klik gambar simbol bintang, rantai, pohon beringin, kepala banteng, atau padi & kapas untuk melihat detailnya!</p>
+                            </div>
+                        </div>
+
+                        <!-- Read Aloud / Voice Sim Button -->
+                        <div class="mt-4 pt-3 border-t border-sky-200 flex justify-end">
+                            <button id="seri1-voice-btn" onclick="playVoicePrompt()" class="hidden btn-bounce px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow">
+                                <i class="fa-solid fa-volume-high"></i> Dengarkan Narasi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100">
+                    <button onclick="showScreen('screen-main-menu')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+                    </button>
+                    <button onclick="goToSeries(2)" class="btn-bounce px-6 py-2.5 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl text-sm shadow">
+                        Lanjut Seri 2 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERI 2: TEBAK SIMBOLNYA ================= -->
+        <section id="screen-seri-2" class="screen hidden">
+            <div class="bg-white/90 rounded-3xl p-6 card-shadow border-4 border-amber-300">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="bg-amber-100 text-amber-700 font-bold px-4 py-1 rounded-full text-sm">Seri 2: Tebak Simbol</span>
+                    <span id="seri2-progress" class="font-bold text-slate-600 text-sm">Soal 1 dari 5</span>
+                </div>
+
+                <!-- Question Box -->
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 text-center mb-6">
+                    <p class="text-xs font-bold text-amber-600 uppercase tracking-wider mb-1">Manakah simbol untuk sila berikut?</p>
+                    <h3 id="seri2-question" class="text-xl md:text-2xl font-extrabold text-slate-800">"Ketuhanan Yang Maha Esa"</h3>
+                </div>
+
+                <!-- Options Grid (3 Options) -->
+                <div id="seri2-options" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="seri2-feedback" class="min-h-[50px] flex items-center justify-center text-center font-bold text-lg mb-4"></div>
+
+                <!-- Footer Navigation -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="goToSeries(1)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Seri 1
+                    </button>
+                    <button id="seri2-next-btn" onclick="nextSeri2Question()" class="hidden btn-bounce px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm shadow">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERI 3: PASANGKAN SIMBOL ================= -->
+        <section id="screen-seri-3" class="screen hidden">
+            <div class="bg-white/90 rounded-3xl p-6 card-shadow border-4 border-purple-300">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="bg-purple-100 text-purple-700 font-bold px-4 py-1 rounded-full text-sm">Seri 3: Pasangkan Simbol</span>
+                    <button onclick="resetSeri3()" class="text-xs text-purple-600 hover:underline font-bold">
+                        <i class="fa-solid fa-rotate-right"></i> Ulangi
+                    </button>
+                </div>
+
+                <div class="text-center mb-4">
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800">Klik Simbol, Lalu Klik Nomor Silanya!</h3>
+                    <p class="text-xs text-slate-500">Pasangkan kelima simbol dengan nomor sila yang benar.</p>
+                </div>
+
+                <!-- Matching Game Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-4">
+                    <!-- Left Column: Symbols -->
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Pilih Simbol</h4>
+                        <div id="seri3-symbols-container" class="space-y-2">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Sila Numbers -->
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Pilih Nomor Sila</h4>
+                        <div id="seri3-numbers-container" class="space-y-2">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="seri3-feedback" class="min-h-[40px] text-center font-bold text-sm my-2"></div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="goToSeries(2)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Seri 2
+                    </button>
+                    <button id="seri3-next-btn" onclick="goToSeries(4)" class="hidden btn-bounce px-6 py-2.5 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-xl text-sm shadow">
+                        Lanjut Seri 4 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERI 4: MISI DETEKTIF PANCASILA ================= -->
+        <section id="screen-seri-4" class="screen hidden">
+            <div class="bg-white/90 rounded-3xl p-6 card-shadow border-4 border-rose-300">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="bg-rose-100 text-rose-700 font-bold px-4 py-1 rounded-full text-sm">Seri 4: Detektif Pancasila</span>
+                    <span id="seri4-progress" class="font-bold text-slate-600 text-sm">Misi 1 dari 5</span>
+                </div>
+
+                <!-- Clue Card -->
+                <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-5 text-center mb-6 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-rose-500 text-white text-xs px-3 py-0.5 rounded-full font-bold">
+                        🕵️ Petunjuk Detektif
+                    </div>
+                    <p id="seri4-clue" class="text-lg md:text-xl font-bold text-slate-800 mt-2">
+                        "Aku berwarna keemasan, berbentuk bintang bersudut lima. Siapakah aku?"
+                    </p>
+                </div>
+
+                <!-- Options -->
+                <div id="seri4-options" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- Dynamic rendering -->
+                </div>
+
+                <div id="seri4-feedback" class="min-h-[50px] flex items-center justify-center text-center font-bold text-lg mb-4"></div>
+
+                <!-- Footer Navigation -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="goToSeries(3)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Seri 3
+                    </button>
+                    <button id="seri4-next-btn" onclick="nextSeri4Question()" class="hidden btn-bounce px-6 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl text-sm shadow">
+                        Misi Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERI 5: TANTANGAN JUARA ================= -->
+        <section id="screen-seri-5" class="screen hidden">
+            <div class="bg-white/90 rounded-3xl p-6 card-shadow border-4 border-emerald-300">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="bg-emerald-100 text-emerald-700 font-bold px-4 py-1 rounded-full text-sm">Seri 5: Tantangan Juara</span>
+                    <span id="seri5-progress" class="font-bold text-slate-600 text-sm">Soal 1 dari 10</span>
+                </div>
+
+                <!-- Question Box -->
+                <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-5 text-center mb-6">
+                    <h3 id="seri5-question" class="text-lg md:text-xl font-bold text-slate-800">
+                        Pertanyaan Tantangan...
+                    </h3>
+                </div>
+
+                <!-- Options Grid -->
+                <div id="seri5-options" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- Dynamic rendering -->
+                </div>
+
+                <div id="seri5-feedback" class="min-h-[50px] flex items-center justify-center text-center font-bold text-lg mb-4"></div>
+
+                <!-- Footer Navigation -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="goToSeries(4)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Seri 4
+                    </button>
+                    <button id="seri5-next-btn" onclick="nextSeri5Question()" class="hidden btn-bounce px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-sm shadow">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CERTIFICATE & RESULT SCREEN ================= -->
+        <section id="screen-result" class="screen hidden text-center space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-10 card-shadow border-4 border-yellow-400 max-w-3xl mx-auto relative">
+                
+                <div class="text-6xl mb-2 float-anim">🏆</div>
+                <h2 class="text-2xl md:text-4xl font-extrabold text-amber-600 mb-1">Luar Biasa, Juara!</h2>
+                <p class="text-slate-600 font-semibold mb-6">Kamu telah menyelesaikan semua Seri Petualangan Garuda Cilik!</p>
+
+                <!-- Score Summary Badge -->
+                <div class="inline-flex items-center gap-4 bg-amber-50 border-2 border-amber-300 px-6 py-3 rounded-2xl mb-8">
+                    <div class="text-center">
+                        <span class="block text-xs text-amber-600 font-bold">TOTAL SKOR</span>
+                        <span id="final-score" class="text-3xl font-extrabold text-amber-700">0</span>
+                    </div>
+                    <div class="h-8 w-px bg-amber-200"></div>
+                    <div class="text-center">
+                        <span class="block text-xs text-amber-600 font-bold">BINTANG</span>
+                        <div id="final-stars" class="text-xl text-yellow-500 flex gap-1">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Printable Certificate Card -->
+                <div id="certificate-card" class="bg-amber-50/50 border-8 border-double border-amber-400 rounded-2xl p-6 text-center my-6 relative overflow-hidden shadow-inner">
+                    <div class="text-xs uppercase font-bold tracking-widest text-amber-700 mb-1">Sertifikat Penghargaan</div>
+                    <h3 class="text-xl md:text-2xl font-black text-slate-800 uppercase mb-2">Garuda Cilik Hebat</h3>
+                    <p class="text-sm text-slate-600 mb-4">Diberikan kepada Pejuang Pancasila Cilik yang berhasil menyelesaikan tantangan:</p>
+                    
+                    <div class="bg-white border-b-2 border-amber-300 py-2 px-6 inline-block rounded-lg text-lg font-extrabold text-amber-700 mb-4 shadow-sm">
+                        "Aku Mengenal Simbol Pancasila"
+                    </div>
+
+                    <p class="text-xs text-slate-500 max-w-md mx-auto italic">
+                        "Hebat! Aku mengenal lima simbol Pancasila. Ayo amalkan nilai-nilai Pancasila dalam kehidupan sehari-hari!"
+                    </p>
+
+                    <div class="mt-6 flex justify-between items-end text-xs text-slate-400 border-t border-amber-200/60 pt-4">
+                        <span>Tanggal: <strong id="cert-date" class="text-slate-600"></strong></span>
+                        <span class="font-bold text-amber-600">Pendidikan Pancasila Kelas 1 SD</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 mt-6">
+                    <button onclick="restartGame()" class="btn-bounce px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Main Lagi
+                    </button>
+                    <button onclick="window.print()" class="btn-bounce px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-2xl shadow flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Cetak Sertifikat
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white/60 border-t border-slate-200 py-3 text-center text-xs text-slate-500">
+        <p>Media Pembelajaran Interaktif Pendidikan Pancasila Kelas 1 SD • Fase A</p>
+    </footer>
+
+    <script>
+        /* ================= GAME DATA & STATE ================= */
+        const PANCASILA_DATA = [
+            {
+                sila: 1,
+                name: "Bintang",
+                text: "Ketuhanan Yang Maha Esa",
+                icon: "⭐",
+                svg: `<svg class="w-16 h-16 mx-auto" viewBox="0 0 100 100"><polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#FBBF24" stroke="#D97706" stroke-width="2"/></svg>`,
+                desc: "Bintang berwarna emas menjadi simbol sila pertama. Maknanya adalah Bangsa Indonesia percaya dan takwa kepada Tuhan Yang Maha Esa.",
+                clue: "Aku berbentuk bintang bersudut lima dan berwarna emas terang. Siapakah aku?"
+            },
+            {
+                sila: 2,
+                name: "Rantai Emas",
+                text: "Kemanusiaan yang Adil dan Beradab",
+                icon: "⛓️",
+                svg: `<div class="text-5xl text-center">⛓️</div>`,
+                desc: "Rantai emas terdiri atas mata rantai berbentuk segi empat dan lingkaran yang saling berkait. Maknanya hubungan antar manusia yang bersatu dan saling membantu.",
+                clue: "Aku terdiri dari lingkaran dan segi empat yang saling menyambung erat. Siapakah aku?"
+            },
+            {
+                sila: 3,
+                name: "Pohon Beringin",
+                text: "Persatuan Indonesia",
+                icon: "🌳",
+                svg: `<div class="text-5xl text-center">🌳</div>`,
+                desc: "Pohon beringin memiliki akar tunggang yang kuat dan daun yang rindang. Maknanya Indonesia tempat berteduh dan bersatunya seluruh rakyat.",
+                clue: "Aku adalah pohon yang sangat besar dengan daun rindang tempat berteduh. Siapakah aku?"
+            },
+            {
+                sila: 4,
+                name: "Kepala Banteng",
+                text: "Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan",
+                icon: "🐂",
+                svg: `<div class="text-5xl text-center">🐂</div>`,
+                desc: "Banteng adalah hewan sosial yang suka berkumpul. Maknanya musyawarah untuk mengambil keputusan bersama secara bijaksana.",
+                clue: "Aku adalah hewan yang suka berkumpul bersama teman-temanku. Siapakah aku?"
+            },
+            {
+                sila: 5,
+                name: "Padi dan Kapas",
+                text: "Keadilan Sosial bagi Seluruh Rakyat Indonesia",
+                icon: "🌾",
+                svg: `<div class="text-5xl text-center">🌾</div>`,
+                desc: "Padi melambangkan pangan (makanan) dan kapas melambangkan sandang (pakaian). Maknanya kemakmuran dan keadilan bagi seluruh rakyat.",
+                clue: "Aku melambangkan makanan pokok dan bahan pakaian rakyat Indonesia. Siapakah aku?"
+            }
+        ];
+
+        let state = {
+            score: 0,
+            soundEnabled: true,
+            currentSeries: 1,
+            
+            // Seri 2
+            seri2Index: 0,
+            seri2Questions: [],
+
+            // Seri 3
+            seri3SelectedSymbol: null,
+            seri3Matches: 0,
+
+            // Seri 4
+            seri4Index: 0,
+            seri4Questions: [],
+
+            // Seri 5
+            seri5Index: 0,
+            seri5Questions: []
+        };
+
+        /* ================= AUDIO SYNTHESIS (No External Sound Files Needed) ================= */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!state.soundEnabled) return;
+            
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.4);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime); // A3
+                    osc.frequency.setValueAtTime(174.61, audioCtx.currentTime + 0.15); // F3
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.08);
+                }
+            } catch (e) {
+                console.log("Audio playback error:", e);
+            }
+        }
+
+        function toggleAudio() {
+            state.soundEnabled = !state.soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (state.soundEnabled) {
+                icon.className = "fa-solid fa-volume-high";
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-slate-400";
+            }
+        }
+
+        /* ================= SCREEN NAVIGATION ================= */
+        function showScreen(screenId) {
+            playSound('click');
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startJourney() {
+            state.score = 0;
+            updateGlobalScore(0);
+            goToSeries(1);
+        }
+
+        function goToSeries(seriesNum) {
+            state.currentSeries = seriesNum;
+            showScreen(`screen-seri-${seriesNum}`);
+
+            if (seriesNum === 1) initSeri1();
+            if (seriesNum === 2) initSeri2();
+            if (seriesNum === 3) initSeri3();
+            if (seriesNum === 4) initSeri4();
+            if (seriesNum === 5) initSeri5();
+        }
+
+        function updateGlobalScore(points) {
+            state.score += points;
+            document.getElementById('global-score').innerText = state.score;
+        }
+
+        /* ================= SERI 1 LOGIC ================= */
+        let currentSeri1Item = null;
+
+        function initSeri1() {
+            selectShieldSymbol(1);
+        }
+
+        function selectShieldSymbol(silaNum) {
+            playSound('click');
+            const data = PANCASILA_DATA.find(d => d.sila === silaNum);
+            currentSeri1Item = data;
+
+            document.getElementById('seri1-icon').innerHTML = data.icon;
+            document.getElementById('seri1-title').innerText = `Sila Ke-${data.sila}: ${data.name}`;
+            document.getElementById('seri1-subtitle').innerText = `"${data.text}"`;
+
+            document.getElementById('seri1-desc').innerHTML = `
+                <div class="bg-white p-3 rounded-xl border border-sky-200 text-sm">
+                    <strong>Teks Sila:</strong>
+                    <p class="text-sky-900 font-bold mt-1">"${data.text}"</p>
+                </div>
+                <div class="text-xs text-slate-600 leading-relaxed">
+                    ${data.desc}
+                </div>
+            `;
+
+            document.getElementById('seri1-voice-btn').classList.remove('hidden');
+        }
+
+        function playVoicePrompt() {
+            if (!currentSeri1Item) return;
+            playSound('click');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const text = `Sila ke ${currentSeri1Item.sila}, ${currentSeri1Item.name}. Bunyi silanya: ${currentSeri1Item.text}`;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ================= SERI 2 LOGIC ================= */
+        function initSeri2() {
+            state.seri2Index = 0;
+            state.seri2Questions = [...PANCASILA_DATA].sort(() => Math.random() - 0.5);
+            renderSeri2Question();
+        }
+
+        function renderSeri2Question() {
+            const current = state.seri2Questions[state.seri2Index];
+            document.getElementById('seri2-progress').innerText = `Soal ${state.seri2Index + 1} dari 5`;
+            document.getElementById('seri2-question').innerText = `"${current.text}"`;
+            document.getElementById('seri2-feedback').innerText = "";
+            document.getElementById('seri2-next-btn').classList.add('hidden');
+
+            // Options: 1 correct + 2 wrong
+            const options = [current];
+            const others = PANCASILA_DATA.filter(d => d.sila !== current.sila).sort(() => Math.random() - 0.5);
+            options.push(others[0], others[1]);
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('seri2-options');
+            container.innerHTML = "";
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "btn-bounce bg-white border-4 border-amber-200 hover:border-amber-400 p-6 rounded-2xl flex flex-col items-center justify-center gap-2 shadow-md";
+                btn.onclick = () => checkSeri2Answer(opt.sila, current.sila, btn);
+                btn.innerHTML = `
+                    <div class="text-5xl mb-2">${opt.icon}</div>
+                    <span class="font-bold text-slate-700 text-sm">${opt.name}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function checkSeri2Answer(selectedSila, correctSila, btnElement) {
+            const feedback = document.getElementById('seri2-feedback');
+            const optionsBtns = document.getElementById('seri2-options').children;
+
+            // Disable all option buttons
+            for (let b of optionsBtns) b.disabled = true;
+
+            if (selectedSila === correctSila) {
+                playSound('correct');
+                btnElement.classList.add('bg-green-100', 'border-green-500');
+                feedback.innerHTML = `<span class="text-green-600"><i class="fa-solid fa-circle-check"></i> Hebat! Jawabanmu Benar (+10 Poin)</span>`;
+                updateGlobalScore(10);
+            } else {
+                playSound('wrong');
+                btnElement.classList.add('bg-red-100', 'border-red-500');
+                feedback.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-circle-xmark"></i> Kurang Tepat! Jawaban yang benar adalah Sila ke-${correctSila}</span>`;
+            }
+
+            document.getElementById('seri2-next-btn').classList.remove('hidden');
+        }
+
+        function nextSeri2Question() {
+            state.seri2Index++;
+            if (state.seri2Index < 5) {
+                renderSeri2Question();
+            } else {
+                goToSeries(3);
+            }
+        }
+
+        /* ================= SERI 3 LOGIC ================= */
+        let seri3SymbolsOrder = [];
+        let seri3NumbersOrder = [];
+
+        function initSeri3() {
+            state.seri3SelectedSymbol = null;
+            state.seri3Matches = 0;
+            seri3SymbolsOrder = [...PANCASILA_DATA].sort(() => Math.random() - 0.5);
+            seri3NumbersOrder = [1, 2, 3, 4, 5].sort(() => Math.random() - 0.5);
+            renderSeri3();
+        }
+
+        function renderSeri3() {
+            document.getElementById('seri3-feedback').innerText = "";
+            document.getElementById('seri3-next-btn').classList.add('hidden');
+
+            const symContainer = document.getElementById('seri3-symbols-container');
+            const numContainer = document.getElementById('seri3-numbers-container');
+
+            symContainer.innerHTML = "";
+            numContainer.innerHTML = "";
+
+            seri3SymbolsOrder.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `symbol-btn-${item.sila}`;
+                btn.className = "w-full bg-white border-2 border-purple-200 p-3 rounded-xl flex items-center gap-3 hover:bg-purple-50 text-left font-bold text-slate-700 transition";
+                btn.onclick = () => selectSeri3Symbol(item.sila, btn);
+                btn.innerHTML = `<span class="text-2xl">${item.icon}</span> <span>${item.name}</span>`;
+                symContainer.appendChild(btn);
+            });
+
+            seri3NumbersOrder.forEach(num => {
+                const btn = document.createElement('button');
+                btn.id = `number-btn-${num}`;
+                btn.className = "w-full bg-white border-2 border-purple-200 p-3 rounded-xl flex items-center justify-between hover:bg-purple-50 font-bold text-slate-700 transition";
+                btn.onclick = () => matchSeri3Number(num, btn);
+                btn.innerHTML = `<span>Sila Ke-${num}</span> <i class="fa-solid fa-circle-dot text-purple-300"></i>`;
+                numContainer.appendChild(btn);
+            });
+        }
+
+        function selectSeri3Symbol(silaNum, btn) {
+            playSound('click');
+            // Remove previous active styles
+            document.querySelectorAll('#seri3-symbols-container button').forEach(b => {
+                if (!b.classList.contains('bg-green-100')) {
+                    b.classList.remove('border-purple-600', 'bg-purple-100');
+                }
+            });
+
+            state.seri3SelectedSymbol = silaNum;
+            btn.classList.add('border-purple-600', 'bg-purple-100');
+            document.getElementById('seri3-feedback').innerText = "Sekarang klik nomor sila yang sesuai!";
+        }
+
+        function matchSeri3Number(num, numBtn) {
+            if (!state.seri3SelectedSymbol) {
+                document.getElementById('seri3-feedback').innerHTML = "<span class='text-amber-600'>Pilih gambar simbol di sebelah kiri terlebih dahulu!</span>";
+                return;
+            }
+
+            const symBtn = document.getElementById(`symbol-btn-${state.seri3SelectedSymbol}`);
+
+            if (state.seri3SelectedSymbol === num) {
+                playSound('correct');
+                updateGlobalScore(10);
+                state.seri3Matches++;
+
+                symBtn.className = "w-full bg-green-100 border-2 border-green-500 p-3 rounded-xl flex items-center gap-3 text-green-800 font-bold pointer-events-none";
+                numBtn.className = "w-full bg-green-100 border-2 border-green-500 p-3 rounded-xl flex items-center justify-between text-green-800 font-bold pointer-events-none";
+                
+                symBtn.innerHTML += ` <i class="fa-solid fa-check text-green-600 ml-auto"></i>`;
+                numBtn.innerHTML = `<span>Sila Ke-${num}</span> <i class="fa-solid fa-check text-green-600"></i>`;
+
+                document.getElementById('seri3-feedback').innerHTML = `<span class="text-green-600">Pasangan Tepat! (+10 Poin)</span>`;
+                state.seri3SelectedSymbol = null;
+
+                if (state.seri3Matches === 5) {
+                    confetti({ particleCount: 50, spread: 60 });
+                    document.getElementById('seri3-feedback').innerHTML = `<span class="text-green-600 text-base font-extrabold">Hore! Semua simbol berhasil dipasangkan! 🎉</span>`;
+                    document.getElementById('seri3-next-btn').classList.remove('hidden');
+                }
+            } else {
+                playSound('wrong');
+                document.getElementById('seri3-feedback').innerHTML = `<span class="text-red-500">Pasangan belum tepat. Coba lagi!</span>`;
+            }
+        }
+
+        function resetSeri3() {
+            initSeri3();
+        }
+
+        /* ================= SERI 4 LOGIC ================= */
+        function initSeri4() {
+            state.seri4Index = 0;
+            state.seri4Questions = [...PANCASILA_DATA].sort(() => Math.random() - 0.5);
+            renderSeri4Question();
+        }
+
+        function renderSeri4Question() {
+            const current = state.seri4Questions[state.seri4Index];
+            document.getElementById('seri4-progress').innerText = `Misi ${state.seri4Index + 1} dari 5`;
+            document.getElementById('seri4-clue').innerText = `"${current.clue}"`;
+            document.getElementById('seri4-feedback').innerText = "";
+            document.getElementById('seri4-next-btn').classList.add('hidden');
+
+            const options = [current];
+            const others = PANCASILA_DATA.filter(d => d.sila !== current.sila).sort(() => Math.random() - 0.5);
+            options.push(others[0], others[1]);
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('seri4-options');
+            container.innerHTML = "";
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "btn-bounce bg-white border-4 border-rose-200 hover:border-rose-400 p-6 rounded-2xl flex flex-col items-center justify-center gap-2 shadow-md";
+                btn.onclick = () => checkSeri4Answer(opt.sila, current.sila, btn);
+                btn.innerHTML = `
+                    <div class="text-5xl mb-2">${opt.icon}</div>
+                    <span class="font-bold text-slate-700 text-sm">${opt.name}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function checkSeri4Answer(selectedSila, correctSila, btnElement) {
+            const feedback = document.getElementById('seri4-feedback');
+            const optionsBtns = document.getElementById('seri4-options').children;
+
+            for (let b of optionsBtns) b.disabled = true;
+
+            if (selectedSila === correctSila) {
+                playSound('correct');
+                btnElement.classList.add('bg-green-100', 'border-green-500');
+                feedback.innerHTML = `<span class="text-green-600"><i class="fa-solid fa-circle-check"></i> Anaisa Detektif Tepat! (+10 Poin)</span>`;
+                updateGlobalScore(10);
+            } else {
+                playSound('wrong');
+                btnElement.classList.add('bg-red-100', 'border-red-500');
+                feedback.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-circle-xmark"></i> Kurang Tepat! Simbol yang dimaksud adalah ${PANCASILA_DATA.find(d=>d.sila===correctSila).name}</span>`;
+            }
+
+            document.getElementById('seri4-next-btn').classList.remove('hidden');
+        }
+
+        function nextSeri4Question() {
+            state.seri4Index++;
+            if (state.seri4Index < 5) {
+                renderSeri4Question();
+            } else {
+                goToSeries(5);
+            }
+        }
+
+        /* ================= SERI 5 LOGIC (CHALLENGE) ================= */
+        function initSeri5() {
+            state.seri5Index = 0;
+            
+            // Build 10 questions mixing text, numbers, and symbols
+            state.seri5Questions = [];
+            for (let i = 0; i < 10; i++) {
+                const target = PANCASILA_DATA[i % 5];
+                const type = i % 3; // 0: text to symbol, 1: number to symbol, 2: symbol to text
+                
+                let qText = "";
+                if (type === 0) qText = `Manakah simbol untuk sila "${target.text}"?`;
+                else if (type === 1) qText = `Apa nama simbol untuk Sila ke-${target.sila}?`;
+                else qText = `Simbol ${target.name} (${target.icon}) merupakan lambang Sila ke...?`;
+
+                state.seri5Questions.push({ target, type, qText });
+            }
+            state.seri5Questions.sort(() => Math.random() - 0.5);
+
+            renderSeri5Question();
+        }
+
+        function renderSeri5Question() {
+            const q = state.seri5Questions[state.seri5Index];
+            document.getElementById('seri5-progress').innerText = `Soal ${state.seri5Index + 1} dari 10`;
+            document.getElementById('seri5-question').innerText = q.qText;
+            document.getElementById('seri5-feedback').innerText = "";
+            document.getElementById('seri5-next-btn').classList.add('hidden');
+
+            const options = [q.target];
+            const others = PANCASILA_DATA.filter(d => d.sila !== q.target.sila).sort(() => Math.random() - 0.5);
+            options.push(others[0], others[1]);
+            options.sort(() => Math.random() - 0.5);
+
+            const container = document.getElementById('seri5-options');
+            container.innerHTML = "";
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "btn-bounce bg-white border-4 border-emerald-200 hover:border-emerald-400 p-5 rounded-2xl flex flex-col items-center justify-center gap-2 shadow-md";
+                btn.onclick = () => checkSeri5Answer(opt.sila, q.target.sila, btn);
+                
+                if (q.type === 2) {
+                    btn.innerHTML = `<span class="font-extrabold text-2xl text-emerald-700">Sila Ke-${opt.sila}</span>`;
+                } else {
+                    btn.innerHTML = `
+                        <div class="text-4xl mb-1">${opt.icon}</div>
+                        <span class="font-bold text-slate-700 text-sm">${opt.name}</span>
+                    `;
+                }
+                container.appendChild(btn);
+            });
+        }
+
+        function checkSeri5Answer(selectedSila, correctSila, btnElement) {
+            const feedback = document.getElementById('seri5-feedback');
+            const optionsBtns = document.getElementById('seri5-options').children;
+
+            for (let b of optionsBtns) b.disabled = true;
+
+            if (selectedSila === correctSila) {
+                playSound('correct');
+                btnElement.classList.add('bg-green-100', 'border-green-500');
+                feedback.innerHTML = `<span class="text-green-600"><i class="fa-solid fa-circle-check"></i> Jawaban Benar! (+10 Poin)</span>`;
+                updateGlobalScore(10);
+            } else {
+                playSound('wrong');
+                btnElement.classList.add('bg-red-100', 'border-red-500');
+                feedback.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-circle-xmark"></i> Kurang Tepat!</span>`;
+            }
+
+            document.getElementById('seri5-next-btn').classList.remove('hidden');
+        }
+
+        function nextSeri5Question() {
+            state.seri5Index++;
+            if (state.seri5Index < 10) {
+                renderSeri5Question();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        /* ================= RESULT & CERTIFICATE ================= */
+        function showFinalResult() {
+            showScreen('screen-result');
+            playSound('correct');
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+            document.getElementById('final-score').innerText = state.score;
+
+            // Render Stars based on max score (250 possible score across game)
+            const starsContainer = document.getElementById('final-stars');
+            let starCount = 1;
+            if (state.score >= 150) starCount = 2;
+            if (state.score >= 200) starCount = 3;
+
+            starsContainer.innerHTML = "";
+            for (let i = 0; i < 3; i++) {
+                if (i < starCount) {
+                    starsContainer.innerHTML += `<i class="fa-solid fa-star text-yellow-400"></i>`;
+                } else {
+                    starsContainer.innerHTML += `<i class="fa-regular fa-star text-slate-300"></i>`;
+                }
+            }
+
+            // Date string
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('cert-date').innerText = dateStr;
+        }
+
+        function restartGame() {
+            startJourney();
+        }
+
+        // Initialize App on window load
+        window.onload = function() {
+            showScreen('screen-main-menu');
+        };
+    </script>
+</body>
+</html>
